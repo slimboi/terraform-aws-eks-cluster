@@ -7,8 +7,8 @@
 # Crash logs
 crash.log
 
-# Sensitive variable files
-*.tfvars
+# # Sensitive variable files
+# *.tfvars
 
 # Ignore plan output
 terraform.tfplan
