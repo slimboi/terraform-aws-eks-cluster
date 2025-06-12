@@ -1,0 +1,40 @@
+name: Infra Provisioning
+
+on:
+  push:
+    branches:
+      - main
+      - feature/**
+    paths:
+      - 'terraform/**'
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Configure AWS credentials (OIDC)
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+        role-session-name: github-actions-infra-plan
+        aws-region: ${{ secrets.AWS_REGION }}
+
+    - name: Terraform Format
+      run: terraform fmt -check -recursive
+      working-directory: terraform
+
+    - name: Terraform Init
+      run: terraform init
+      working-directory: terraform
+
+    - name: Terraform Plan
+      run: terraform plan
+      working-directory: terraform
