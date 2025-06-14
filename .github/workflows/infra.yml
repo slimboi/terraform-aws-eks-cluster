@@ -44,11 +44,11 @@ jobs:
       run: terraform validate
       working-directory: terraform
 
-    - name: Cleanup locks on cancellation
-      if: cancelled()
-      run: terraform force-unlock -force $(terraform show -json 2>/dev/null | jq -r '.lock_id // empty') || true
-      working-directory: terraform
-      continue-on-error: true  
+    # - name: Cleanup locks on cancellation
+    #   if: cancelled()
+    #   run: terraform force-unlock -force $(terraform show -json 2>/dev/null | jq -r '.lock_id // empty') || true
+    #   working-directory: terraform
+    #   continue-on-error: true  
 
     - name: Terraform Plan
       run: terraform plan
