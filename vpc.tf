@@ -1,14 +1,5 @@
 # This module creates a VPC with public and private subnets.
 
-provider "aws" {
-  region = "ap-southeast-2"
-}
-
-variable "vpc_cidr_block" {}
-variable "private_subnets_cidr_blocks" {}
-variable "public_subnets_cidr_blocks" {}
-variable "region" {}
-
 data "aws_availability_zones" "azs" {}
 
 module "myapp_vpc" {
